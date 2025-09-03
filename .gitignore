@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Misc
+*.log
+*.sqlite3
+.DS_Store
+
+# Developer guide (internal use)
+DEVELOPER_GUIDE.md
