@@ -5,7 +5,7 @@ import streamlit as st
 
 # Configuration
 API_KEY = os.getenv("HF_API_KEY")  # API key should be set as an environment variable
-MODEL_REPO = os.getenv("HF_MODEL_REPO") or "mistralai/Mistral-7B-Instruct-v0.2"
+MODEL_REPO = os.getenv("HF_MODEL_REPO") or "HuggingFaceH4/zephyr-7b-beta"
 MODEL_URL = f"https://api-inference.huggingface.co/models/{MODEL_REPO}"
 
 if not API_KEY:
