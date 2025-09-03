@@ -120,8 +120,8 @@ def build_prompt(ingredients: str, avoid: str, servings: int, recipes_count: int
 
 
 # Streamlit UI
-st.set_page_config(page_title="Gluten-Free Recipe Generator", page_icon="🍲", layout="centered")
-st.title("🍲 Gluten-Free Recipe Generator (Free)")
+st.set_page_config(page_title="SinGlu", page_icon="🍲", layout="centered")
+st.title("🍲 SinGlu - Gluten-Free Recipe Generator")
 st.write("Enter what you have and get **gluten-free** recipe ideas with safe substitutions. Powered by Hugging Face.")
 
 with st.expander("Advanced options"):
