@@ -1,9 +1,9 @@
 {
-  "gluten-free spaghetti": {
+  "gluten-free spaghetti pasta": {
     "uk": "https://www.amazon.co.uk/dp/B01IUL76SE",
     "es": "https://www.amazon.es/dp/B01IUL76SE"
   },
-  "gluten-free penne": {
+  "gluten-free penne pasta": {
     "uk": "https://www.amazon.co.uk/dp/B01IUL742C",
     "es": "https://www.amazon.es/dp/B01IUL742C"
   },
@@ -11,7 +11,7 @@
     "uk": "https://www.amazon.co.uk/dp/B01N7KHHRK",
     "es": "https://www.amazon.es/dp/B01N7KHHRK"
   },
-  "gluten-free sourdough loaf": {
+  "gluten-free sourdough loaf bread": {
     "uk": "https://amzn.eu/d/73j5tTj",
     "es": "https://amzn.eu/d/aMU1MXm"
   }

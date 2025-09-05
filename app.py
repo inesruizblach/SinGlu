@@ -15,12 +15,12 @@ if not HF_TOKEN:
 
 HEADERS = {"Authorization": f"Bearer {HF_TOKEN}"}
 
-# Load affiliate links
+# Load product links
 try:
-    with open("affiliate_links.json", "r", encoding="utf-8") as f:
-        AFFILIATE_LINKS = json.load(f)
+    with open("product_links.json", "r", encoding="utf-8") as f:
+        PRODUCT_LINKS = json.load(f)
 except FileNotFoundError:
-    AFFILIATE_LINKS = {}
+    PRODUCT_LINKS = {}
 
 # Gluten substitutions
 SUBS = {
@@ -41,32 +41,32 @@ SUBS = {
 }
 
 # Helper functions
-def get_affiliate_link(product_name: str, region: str = "uk"):
+def get_product_link(product_name: str, region: str = "uk"):
     """
-    Retrieve the affiliate link for a given product and region.
+    Retrieve the product link for a given product and region.
 
     Args:
         product_name (str): The name of the product to look up.
-        region (str, optional): The affiliate region code (default is "uk").
+        region (str, optional): The market region code (default is "uk").
 
     Returns:
-        str or None: The affiliate link if available, otherwise None.
+        str or None: The product link if available, otherwise None.
     """
     product = product_name.lower()
-    if product in AFFILIATE_LINKS and region in AFFILIATE_LINKS[product]:
-        base_url = AFFILIATE_LINKS[product][region]
-        tag = st.secrets.get(f"affiliate_tag_{region}", "")
+    if product in PRODUCT_LINKS and region in PRODUCT_LINKS[product]:
+        base_url = PRODUCT_LINKS[product][region]
+        tag = st.secrets.get(f"product_tag_{region}", "")
         return f"{base_url}?tag={tag}" if tag else base_url
     return None
 
 def possible_gluten_flags_with_links(ingredients_text: str, region: str = "uk"):
     """
     Identify gluten-containing ingredients in the input text and suggest gluten-free substitutes,
-    including affiliate links where available.
+    including product links where available.
 
     Args:
         ingredients_text (str): The list of ingredients as a string.
-        region (str, optional): The affiliate region code (default is "uk").
+        region (str, optional): The market region code (default is "uk").
 
     Returns:
         list: A list of dictionaries with keys 'ingredient', 'substitute', and 'link'.
@@ -75,7 +75,7 @@ def possible_gluten_flags_with_links(ingredients_text: str, region: str = "uk"):
     flagged = []
     for k, v in SUBS.items():
         if k in text:
-            link = get_affiliate_link(v, region)
+            link = get_product_link(v, region)
             flagged.append({
                 "ingredient": k,
                 "substitute": v,
@@ -83,23 +83,32 @@ def possible_gluten_flags_with_links(ingredients_text: str, region: str = "uk"):
             })
     return flagged
 
-def get_affiliate_recommendations(ingredients_text: str, region: str = "uk"):
+def get_product_recommendations(ingredients_text: str, region: str = "uk"):
     """
-    Recommend affiliate products based on the user's ingredients.
+    Suggest relevant gluten-free products based on detected ingredients.
 
     Args:
         ingredients_text (str): The list of ingredients as a string.
-        region (str, optional): The affiliate region code (default is "uk").
+        region (str, optional): The market region code (default is "uk").
 
     Returns:
-        list: A list of tuples (product, affiliate_link) for recommended products.
+        list: A list of tuples (product, product_link) for recommended products.
     """
     recs = []
     text = ingredients_text.lower()
-    for product, links in AFFILIATE_LINKS.items():
-        if product in text and region in links:
-            recs.append((product, get_affiliate_link(product, region)))
+
+    for product, links in PRODUCT_LINKS.items():
+        link = links.get(region)
+        if not link:  # Skip if no link for region
+            continue
+
+        # Match whole words / phrases
+        product_words = product.lower().split()
+        if all(word in text for word in product_words):
+            recs.append((product, link))
+
     return recs
+
 
 def hf_generate_chat(prompt_text: str):
     """
@@ -173,7 +182,7 @@ st.write("Enter your ingredients and get **gluten-free** recipes with substituti
 with st.expander("Advanced options"):
     recipes_count = st.slider("How many recipe options?", min_value=1, max_value=3, value=2)
     servings = st.slider("Servings", min_value=1, max_value=8, value=2)
-    region = st.selectbox("Affiliate region", options=["uk", "es"], index=0)
+    region = st.selectbox("Market region", options=["uk", "es"], index=0)
 
 ingredients = st.text_area(
     "Ingredients you have (comma or line separated)",
@@ -187,7 +196,7 @@ if st.button("Generate recipe(s)"):
         st.warning("Please enter some ingredients first.")
         st.stop()
 
-    # Show substitutions with affiliate links
+    # Show substitutions with product links
     flags = possible_gluten_flags_with_links(ingredients, region)
     if flags:
         st.info("Heads up! We detected potential gluten-containing items and suggested swaps:")
@@ -208,8 +217,8 @@ if st.button("Generate recipe(s)"):
             st.markdown(output)
             st.caption(f"Model: {MODEL_REPO}")
 
-    # Show general affiliate recommendations
-    recs = get_affiliate_recommendations(ingredients, region)
+    # Show general product recommendations
+    recs = get_product_recommendations(ingredients, region)
     if recs:
         st.subheader("🛒 Recommended Gluten-Free Products")
         for product, link in recs:
