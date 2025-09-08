@@ -1,5 +1,6 @@
 import os
 import json
+import difflib
 import streamlit as st
 import requests
 
@@ -40,7 +41,7 @@ SUBS = {
     "beer": "gluten-free beer or stock"
 }
 
-# Helper functions
+
 def get_product_link(product_name: str, region: str = "uk"):
     """
     Retrieve the product link for a given product and region.
@@ -59,33 +60,61 @@ def get_product_link(product_name: str, region: str = "uk"):
         return f"{base_url}?tag={tag}" if tag else base_url
     return None
 
+
 def possible_gluten_flags_with_links(ingredients_text: str, region: str = "uk"):
     """
     Identify gluten-containing ingredients in the input text and suggest gluten-free substitutes,
-    including product links where available.
-
+    including product links where available. Skips warnings if the ingredient is already labeled as gluten-free.
+    Uses fuzzy matching to detect misspelled ingredients.
+    
     Args:
         ingredients_text (str): The list of ingredients as a string.
         region (str, optional): The market region code (default is "uk").
-
+    
     Returns:
         list: A list of dictionaries with keys 'ingredient', 'substitute', and 'link'.
     """
+    import difflib
+
     text = ingredients_text.lower()
+    words = text.split()
     flagged = []
+
     for k, v in SUBS.items():
+        # Direct match check
         if k in text:
+            if f"gluten-free {k}" in text or f"gf {k}" in text:
+                continue
             link = get_product_link(v, region)
             flagged.append({
                 "ingredient": k,
                 "substitute": v,
                 "link": link
             })
+            continue
+
+        # Handle typos
+        for word in words:
+            close = difflib.get_close_matches(word, k.split(), cutoff=0.8)
+            if close:
+                if f"gluten-free {word}" in text or f"gf {word}" in text:
+                    continue
+                link = get_product_link(v, region)
+                flagged.append({
+                    "ingredient": k,
+                    "substitute": v,
+                    "link": link
+                })
+                break
+
     return flagged
+
+
 
 def get_product_recommendations(ingredients_text: str, region: str = "uk"):
     """
     Suggest relevant gluten-free products based on detected ingredients.
+    Uses fuzzy matching to catch variations (e.g., 'spaguetti' → 'spaghetti').
 
     Args:
         ingredients_text (str): The list of ingredients as a string.
@@ -95,17 +124,26 @@ def get_product_recommendations(ingredients_text: str, region: str = "uk"):
         list: A list of tuples (product, product_link) for recommended products.
     """
     recs = []
-    text = ingredients_text.lower()
+    text = ingredients_text.lower().split()
 
     for product, links in PRODUCT_LINKS.items():
         link = links.get(region)
-        if not link:  # Skip if no link for region
+        if not link:
             continue
 
-        # Match whole words / phrases
         product_words = product.lower().split()
-        if all(word in text for word in product_words):
+
+        # Exact phrase match first
+        if all(word in " ".join(text) for word in product_words):
             recs.append((product, link))
+            continue
+
+        # Fuzzy match (handles typos & variations)
+        for word in text:
+            close = difflib.get_close_matches(word, product_words, cutoff=0.75)
+            if close:
+                recs.append((product, link))
+                break
 
     return recs
 
@@ -130,6 +168,7 @@ def hf_generate_chat(prompt_text: str):
         raise RuntimeError(f"HF API error {resp.status_code}: {resp.text[:500]}")
     data = resp.json()
     return data["choices"][0]["message"]["content"]
+
 
 def build_prompt(ingredients: str, avoid: str, servings: int, recipes_count: int):
     """
@@ -173,6 +212,7 @@ Prep: <minutes> | Cook: <minutes>
 
 Keep it concise but practical. Avoid brand names. Always ensure substitutes are safe for celiac/gluten intolerance.
 """
+
 
 # Streamlit UI
 st.set_page_config(page_title="SinGlu", page_icon="🍲", layout="centered")
