@@ -9,7 +9,7 @@
 </div>
 
 <div style="flex: 1; min-width: 300px; text-align: center;">
-<img src="demo/home.png" alt="SinGlu Home Screen" width="100%"/>
+<img src="demo/home.png" alt="SinGlu Home Screen" width="60%"/>
 </div>
 
 </div>
@@ -59,17 +59,17 @@ Example usage:
 
 <div style="flex: 1; min-width: 200px; text-align: center;">
 <p><b>Ingredient Input Screen</b></p>
-<img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="100%"/>
+<img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="60%"/>
 </div>
 
 <div style="flex: 1; min-width: 200px; text-align: center;">
 <p><b>Generated Recipe 1</b></p>
-<img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="100%"/>
+<img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="60%"/>
 </div>
 
 <div style="flex: 1; min-width: 200px; text-align: center;">
 <p><b>Generated Recipe 2</b></p>
-<img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="100%"/>
+<img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="60%"/>
 </div>
 
 </div>
