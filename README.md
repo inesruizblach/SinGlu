@@ -1,6 +1,18 @@
 # SinGlu – Gluten-Free Recipe Generator 🍲
 
-**SinGlu** is an AI-powered application that generates **gluten-free recipes** from your available ingredients using state-of-the-art Hugging Face models. The app provides smart ingredient substitutions to ensure safe and delicious gluten-free meals.
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px;">
+
+<div style="flex: 1; min-width: 300px;">
+<p>
+<b>SinGlu</b> is an AI-powered application that generates <b>gluten-free recipes</b> from your available ingredients using state-of-the-art Hugging Face models. The app provides smart ingredient substitutions to ensure safe and delicious gluten-free meals.
+</p>
+</div>
+
+<div style="flex: 1; min-width: 300px; text-align: center;">
+<img src="demo/home.png" alt="SinGlu Home Screen" width="100%"/>
+</div>
+
+</div>
 
 ---
 
@@ -38,6 +50,29 @@ SinGlu enhances the recipe experience by suggesting gluten-free product alternat
 
 Example usage:
 - If a recipe calls for **gluten-free pasta**, SinGlu shows a product link to Amazon UK or Spain.
+
+---
+
+## Example
+
+<div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: flex-start;">
+
+<div style="flex: 1; min-width: 200px; text-align: center;">
+<p><b>Ingredient Input Screen</b></p>
+<img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="100%"/>
+</div>
+
+<div style="flex: 1; min-width: 200px; text-align: center;">
+<p><b>Generated Recipe 1</b></p>
+<img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="100%"/>
+</div>
+
+<div style="flex: 1; min-width: 200px; text-align: center;">
+<p><b>Generated Recipe 2</b></p>
+<img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="100%"/>
+</div>
+
+</div>
 
 ---
 

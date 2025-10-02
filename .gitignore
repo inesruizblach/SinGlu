@@ -18,3 +18,18 @@ env/
 
 # Developer guide (internal use)
 DEVELOPER_GUIDE.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Streamlit config and cache
+.streamlit/
+
+# Product links JSON file (optional if sensitive)
+product_links.json
