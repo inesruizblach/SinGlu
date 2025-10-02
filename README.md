@@ -59,8 +59,7 @@ Example usage:
 
 | Ingredient Input Screen | Generated Recipe 1 | Generated Recipe 2 |
 |--------------------------|----------------------|----------------------|
-| <img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="200"/> | <img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="200"/> | <img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="200"/> |
-
+| <img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="400"/> | <img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="400"/> | <img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="400"/> |
 
 ---
 
