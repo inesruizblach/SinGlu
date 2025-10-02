@@ -55,24 +55,10 @@ Example usage:
 
 ## Example
 
-<div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: flex-start;">
+| Ingredient Input Screen | Generated Recipe 1 | Generated Recipe 2 |
+|--------------------------|----------------------|----------------------|
+| <img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="60%"/> | <img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="60%"/> | <img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="60%"/> |
 
-<div style="flex: 1; min-width: 200px; text-align: center;">
-<p><b>Ingredient Input Screen</b></p>
-<img src="demo/home-input-ingredients.png" alt="Ingredient Input Screen" width="60%"/>
-</div>
-
-<div style="flex: 1; min-width: 200px; text-align: center;">
-<p><b>Generated Recipe 1</b></p>
-<img src="demo/recipe1.png" alt="Generated Recipe Example 1" width="60%"/>
-</div>
-
-<div style="flex: 1; min-width: 200px; text-align: center;">
-<p><b>Generated Recipe 2</b></p>
-<img src="demo/recipe2.png" alt="Generated Recipe Example 2" width="60%"/>
-</div>
-
-</div>
 
 ---
 
